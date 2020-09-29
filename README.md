@@ -1,0 +1,1 @@
+# MaxstARSDK_Android_Native_Sample
