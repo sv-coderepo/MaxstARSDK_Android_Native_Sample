@@ -84,7 +84,6 @@ public class ObjectTrackerActivity extends AppCompatActivity {
 
 		TrackerManager.getInstance().stopTracker();
 		CameraDevice.getInstance().stop();
-		SensorDevice.getInstance().stop();
 
 		MaxstAR.onPause();
 	}

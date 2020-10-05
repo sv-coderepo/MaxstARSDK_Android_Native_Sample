@@ -146,62 +146,6 @@ public class MarkerTrackerActivity extends AppCompatActivity implements View.OnC
 		}
 	};
 
-	static final int NONE = 0;
-	static final int ZOOM = 1;
-	int mode = NONE;
-
-	float oldDist = 1f;
-	float newDist = 1f;
-
-	private float deltaMagnitudediff;
-	private	float CurrentCameraZoom=0.0f;
-	private float CameraZoomSpeed = 0.02f;
-
-	public boolean onTouchEvent(MotionEvent event) {
-		int act = event.getAction();
-
-		switch(act & MotionEvent.ACTION_MASK) {
-			case MotionEvent.ACTION_MOVE:
-				if (mode == ZOOM) {
-					newDist = spacing(event);
-
-					deltaMagnitudediff = newDist - oldDist;
-					CurrentCameraZoom+=deltaMagnitudediff * CameraZoomSpeed;
-
-					if(CurrentCameraZoom > CameraDevice.getInstance().getMaxZoomValue())
-						CurrentCameraZoom = CameraDevice.getInstance().getMaxZoomValue();
-					else if(CurrentCameraZoom < 0)
-						CurrentCameraZoom = 0.0f;
-
-					CameraDevice.getInstance().setZoom((int)CurrentCameraZoom);
-					oldDist = newDist;
-				}
-				break;
-			case MotionEvent.ACTION_UP:
-			case MotionEvent.ACTION_POINTER_UP:
-				mode = NONE;
-				break;
-			case MotionEvent.ACTION_POINTER_DOWN:
-				mode = ZOOM;
-
-				newDist = spacing(event);
-				oldDist = spacing(event);
-
-				break;
-			case MotionEvent.ACTION_CANCEL:
-			default :
-				break;
-		}
-
-		return super.onTouchEvent(event);
-	}
-
-	private float spacing(MotionEvent event) {
-		float x = event.getX(0) - event.getX(1);
-		float y = event.getY(0) - event.getY(1);
-		return (float)Math.sqrt(x * x + y * y);
-	}
-
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
