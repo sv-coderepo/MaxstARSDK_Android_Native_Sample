@@ -49,6 +49,9 @@ public class InstantFusionTrackerActivity extends AppCompatActivity implements V
 		instantTargetRenderer.listener = resultListener;
 
 		preferCameraResolution = getSharedPreferences(SampleUtil.PREF_NAME, Activity.MODE_PRIVATE).getInt(SampleUtil.PREF_KEY_CAM_RESOLUTION, 0);
+
+		MaxstAR.init(this.getApplicationContext(), getResources().getString(R.string.app_key));
+		MaxstAR.setScreenOrientation(getResources().getConfiguration().orientation);
 	}
 
 	@Override
@@ -138,20 +141,6 @@ public class InstantFusionTrackerActivity extends AppCompatActivity implements V
 				}
 				break;
 			}
-
-			case MotionEvent.ACTION_UP:
-//				touchStartX = x;
-//				touchStartY = y;
-//
-//				final float[] screen = new float[2];
-//				screen[0] = x;
-//				screen[1] = y;
-//
-//				final float[] modelMatrix = new float[16];
-//
-//				TrackerManager.getInstance().getWorldPositionFromScreenCoordinate(screen, modelMatrix);
-//				instantTargetRenderer.setTouchPose(modelMatrix);
-				break;
 		}
 
 		return true;

@@ -36,6 +36,9 @@ public class ObjectTrackerActivity extends AppCompatActivity {
 		glSurfaceView.setRenderer(renderer);
 
 		preferCameraResolution = getSharedPreferences(SampleUtil.PREF_NAME, Activity.MODE_PRIVATE).getInt(SampleUtil.PREF_KEY_CAM_RESOLUTION, 0);
+
+		MaxstAR.init(this.getApplicationContext(), getResources().getString(R.string.app_key));
+		MaxstAR.setScreenOrientation(getResources().getConfiguration().orientation);
 	}
 
 	@Override

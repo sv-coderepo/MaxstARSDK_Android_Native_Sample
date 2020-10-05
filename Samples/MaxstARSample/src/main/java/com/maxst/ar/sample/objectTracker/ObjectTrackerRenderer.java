@@ -38,8 +38,6 @@ class ObjectTrackerRenderer implements Renderer {
 	private final Activity activity;
 
 	private TexturedCubeRenderer texturedCubeRenderer;
-	private FeaturePointRenderer featurePointRenderer;
-	private SphereRenderer sphereRenderer;
 	private BoundingShapeRenderer boundingShapeRenderer;
 	private BackgroundRenderHelper backgroundRenderHelper;
 
@@ -61,15 +59,11 @@ class ObjectTrackerRenderer implements Renderer {
 
 		backgroundRenderHelper.drawBackground(image, projectionMatrix, backgroundPlaneInfo);
 
-		featurePointRenderer.setProjectionMatrix(projectionMatrix);
 		GuideInfo gi = TrackerManager.getInstance().getGuideInformation();
-		featurePointRenderer.draw(gi, trackingResult);
 		GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
 		if (trackingResult.getCount() > 0) {
 			Trackable trackable = trackingResult.getTrackable(0);
-
-
 			float[] bb = gi.getBoundingBox();
 
 			boundingShapeRenderer.setProjectionMatrix(projectionMatrix);
@@ -78,20 +72,11 @@ class ObjectTrackerRenderer implements Renderer {
 			boundingShapeRenderer.setScale(bb[3], bb[4], bb[5]);
 			boundingShapeRenderer.draw();
 
-			int anchorCount = gi.getTagAnchorCount();
-
-			if(anchorCount > 0) {
-				TagAnchor[] anchors = gi.getTagAnchors();
-				for(int i=0; i<anchorCount; i++) {
-					TagAnchor eachAnchor = anchors[i];
-					sphereRenderer.setProjectionMatrix(projectionMatrix);
-					sphereRenderer.setTransform(trackable.getPoseMatrix());
-					sphereRenderer.setTranslate((float)eachAnchor.positionX, (float)eachAnchor.positionY, (float)eachAnchor.positionZ);
-					sphereRenderer.setScale(0.02f, 0.02f, 0.02f);
-					sphereRenderer.setRotation(-90.0f, 1.0f, 0.0f, 0.0f);
-					sphereRenderer.draw();
-				}
-			}
+			texturedCubeRenderer.setProjectionMatrix(projectionMatrix);
+			texturedCubeRenderer.setTransform(trackable.getPoseMatrix());
+			texturedCubeRenderer.setTranslate(0, 0.0f, 0.0f);
+			texturedCubeRenderer.setScale(0.15f, 0.15f, 0.0001f);
+			texturedCubeRenderer.draw();
 		}
 	}
 
@@ -110,13 +95,6 @@ class ObjectTrackerRenderer implements Renderer {
 		texturedCubeRenderer = new TexturedCubeRenderer();
 		Bitmap bitmap = MaxstARUtil.getBitmapFromAsset("MaxstAR_Cube.png", activity.getAssets());
 		texturedCubeRenderer.setTextureBitmap(bitmap);
-
-		featurePointRenderer = new FeaturePointRenderer();
-		Bitmap blueBitmap = MaxstARUtil.getBitmapFromAsset("bluedot.png", activity.getAssets());
-		Bitmap redBitmap = MaxstARUtil.getBitmapFromAsset("reddot.png", activity.getAssets());
-		featurePointRenderer.setFeatureImage(blueBitmap, redBitmap);
-
-		sphereRenderer = new SphereRenderer(1.0f, 0.0f, 0.0f, 1.0f);
 
 		boundingShapeRenderer = new BoundingShapeRenderer();
 		backgroundRenderHelper = new BackgroundRenderHelper();

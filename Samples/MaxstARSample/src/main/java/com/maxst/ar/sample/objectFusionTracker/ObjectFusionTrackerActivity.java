@@ -36,6 +36,9 @@ public class ObjectFusionTrackerActivity extends AppCompatActivity {
 
 		guideView = (View)findViewById(R.id.guideView);
 		renderer.listener = resultListener;
+
+		MaxstAR.init(this.getApplicationContext(), getResources().getString(R.string.app_key));
+		MaxstAR.setScreenOrientation(getResources().getConfiguration().orientation);
 	}
 
 	@Override

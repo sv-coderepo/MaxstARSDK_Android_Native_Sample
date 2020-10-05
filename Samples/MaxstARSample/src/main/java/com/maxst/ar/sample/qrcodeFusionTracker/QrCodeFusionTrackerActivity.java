@@ -40,6 +40,9 @@ public class QrCodeFusionTrackerActivity extends AppCompatActivity implements Vi
 		recognizedQrCodeView = (TextView)findViewById(R.id.recognized_QrCode);
 		guideView = (View)findViewById(R.id.guideView);
 		qrCodeTargetRenderer.listener = resultListener;
+
+		MaxstAR.init(this.getApplicationContext(), getResources().getString(R.string.app_key));
+		MaxstAR.setScreenOrientation(getResources().getConfiguration().orientation);
 	}
 
 	@Override

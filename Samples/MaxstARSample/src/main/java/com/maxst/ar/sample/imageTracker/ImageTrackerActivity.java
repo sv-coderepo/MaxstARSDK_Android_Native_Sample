@@ -40,6 +40,9 @@ public class ImageTrackerActivity extends AppCompatActivity implements View.OnCl
 		glSurfaceView.setEGLContextClientVersion(2);
 		glSurfaceView.setRenderer(imageTargetRenderer);
 
+		MaxstAR.init(this.getApplicationContext(), getResources().getString(R.string.app_key));
+		MaxstAR.setScreenOrientation(getResources().getConfiguration().orientation);
+
 		TrackerManager.getInstance().startTracker(TrackerManager.TRACKER_TYPE_IMAGE);
 		TrackerManager.getInstance().addTrackerData("ImageTarget/Glacier.2dmap", true);
 		TrackerManager.getInstance().addTrackerData("ImageTarget/Lego.2dmap", true);

@@ -48,7 +48,7 @@ class ObjectFusionTrackerRenderer implements Renderer {
 	private final Activity activity;
 
 	private TexturedCubeRenderer texturedCubeRenderer;
-	private SphereRenderer sphereRenderer;
+	private BoundingShapeRenderer boundingShapeRenderer;
 	private BackgroundRenderHelper backgroundRenderHelper;
 	public TrackerResultListener listener = null;
 
@@ -82,23 +82,15 @@ class ObjectFusionTrackerRenderer implements Renderer {
 
 		if(trackingResult.getCount() > 0) {
 			Trackable trackable = trackingResult.getTrackable(0);
-
 			float[] poseMatrix = trackable.getPoseMatrix();
 
-			int anchorCount = gi.getTagAnchorCount();
+			float[] bb = gi.getBoundingBox();
 
-			if(anchorCount > 0) {
-				TagAnchor[] anchors = gi.getTagAnchors();
-				for(int i=0; i<anchorCount; i++) {
-					TagAnchor eachAnchor = anchors[i];
-					sphereRenderer.setProjectionMatrix(projectionMatrix);
-					sphereRenderer.setTransform(poseMatrix);
-					sphereRenderer.setTranslate((float)eachAnchor.positionX, (float)eachAnchor.positionY, (float)eachAnchor.positionZ);
-					sphereRenderer.setScale(0.02f, 0.02f, 0.02f);
-					sphereRenderer.setRotation(-90.0f, 1.0f, 0.0f, 0.0f);
-					sphereRenderer.draw();
-				}
-			}
+			boundingShapeRenderer.setProjectionMatrix(projectionMatrix);
+			boundingShapeRenderer.setTransform(trackable.getPoseMatrix());
+			boundingShapeRenderer.setTranslate(bb[0], bb[1], bb[2]);
+			boundingShapeRenderer.setScale(bb[3], bb[4], bb[5]);
+			boundingShapeRenderer.draw();
 
 			texturedCubeRenderer.setProjectionMatrix(projectionMatrix);
 			texturedCubeRenderer.setTransform(poseMatrix);
@@ -124,9 +116,8 @@ class ObjectFusionTrackerRenderer implements Renderer {
 		Bitmap bitmap = MaxstARUtil.getBitmapFromAsset("MaxstAR_Cube.png", activity.getAssets());
 		texturedCubeRenderer.setTextureBitmap(bitmap);
 
-		sphereRenderer = new SphereRenderer(1.0f, 0.0f, 0.0f, 1.0f);
-
 		backgroundRenderHelper = new BackgroundRenderHelper();
+		boundingShapeRenderer = new BoundingShapeRenderer();
 
 		CameraDevice.getInstance().setARCoreTexture();
 	}

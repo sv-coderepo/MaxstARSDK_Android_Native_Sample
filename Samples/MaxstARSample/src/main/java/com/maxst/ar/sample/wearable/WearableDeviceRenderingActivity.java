@@ -45,6 +45,9 @@ public class WearableDeviceRenderingActivity extends AppCompatActivity implement
 		findViewById(R.id.extended_tracking).setOnClickListener(this);
 		findViewById(R.id.multi_tracking).setOnClickListener(this);
 
+		MaxstAR.init(this.getApplicationContext(), getResources().getString(R.string.app_key));
+		MaxstAR.setScreenOrientation(getResources().getConfiguration().orientation);
+
 		wearableDeviceController = WearableDeviceController.createDeviceController(this);
 		WearableDeviceRenderer imageTargetRenderer = new WearableDeviceRenderer(this, wearableDeviceController);
 		glSurfaceView = (GLSurfaceView) findViewById(R.id.gl_surface_view);

@@ -34,7 +34,6 @@ class QrCodeTrackerRenderer implements Renderer {
 
 	private int surfaceWidth;
 	private int surfaceHeight;
-	private Yuv420spRenderer backgroundCameraQuad;
 
 	private final Activity activity;
 	private BackgroundRenderHelper backgroundRenderHelper;
@@ -47,8 +46,6 @@ class QrCodeTrackerRenderer implements Renderer {
 	@Override
 	public void onSurfaceCreated(GL10 unused, EGLConfig config) {
 		GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
-		backgroundCameraQuad = new Yuv420spRenderer();
 
 		Bitmap bitmap = MaxstARUtil.getBitmapFromAsset("MaxstAR_Cube.png", activity.getAssets());
 

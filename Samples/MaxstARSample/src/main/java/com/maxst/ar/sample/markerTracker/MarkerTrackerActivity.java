@@ -43,6 +43,9 @@ public class MarkerTrackerActivity extends AppCompatActivity implements View.OnC
 		recognizedMarkerView = (TextView)findViewById(R.id.recognized_marker);
 		markerTargetRenderer.listener = resultListener;
 
+		MaxstAR.init(this.getApplicationContext(), getResources().getString(R.string.app_key));
+		MaxstAR.setScreenOrientation(getResources().getConfiguration().orientation);
+
 		TrackerManager.getInstance().addTrackerData("{\"marker\":\"scale\",\"all\":1}", true);
 		findViewById(R.id.normal_tracking).setOnClickListener(this);
 		findViewById(R.id.enhanced_tracking).setOnClickListener(this);

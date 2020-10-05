@@ -38,6 +38,8 @@ public class ImageFusionTrackerActivity extends AppCompatActivity implements Vie
 		guideView = (View)findViewById(R.id.guideView);
 		imageFusionTargetRenderer.listener = resultListener;
 
+		MaxstAR.init(this.getApplicationContext(), getResources().getString(R.string.app_key));
+		MaxstAR.setScreenOrientation(getResources().getConfiguration().orientation);
 	}
 
 	@Override
